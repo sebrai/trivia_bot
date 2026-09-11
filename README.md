@@ -20,3 +20,7 @@
 - *.env file for password and username*
 
 ## db structure
+
+## idea
+
+- *you can take random trivia with multiple difficulties, the questions are supplied by open trivia api, your account and quiz scores are saved in a db*
