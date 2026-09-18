@@ -21,6 +21,40 @@
 
 ## db structure
 
+- *users*
+
+``` sql
+
+    +------------+--------------+------+-----+---------------------+-------+
+    | Field      | Type         | Null | Key | Default             | Extra |
+    +------------+--------------+------+-----+---------------------+-------+
+    | id         | varchar(255) | NO   | PRI | uuid()              |       |
+    | username   | varchar(31)  | NO   |     | NULL                |       |
+    | password   | varchar(255) | NO   |     | NULL                |       |
+    | created_at | timestamp    | NO   |     | current_timestamp() |       |
+    | score      | int(11)      | NO   |     | 0                   |       |
+    +------------+--------------+------+-----+---------------------+-------+
+
+
+```
+
+- *questions*
+
+``` sql
+
+    +---------+--------------+------+-----+---------+-------+
+    | Field   | Type         | Null | Key | Default | Extra |
+    +---------+--------------+------+-----+---------+-------+
+    | id      | varchar(255) | NO   | PRI | uuid()  |       |
+    | text    | varchar(255) | NO   |     | NULL    |       |
+    | awnser  | varchar(7)   | YES  |     | NULL    |       |
+    | user_id | varchar(255) | NO   | MUL | NULL    |       |
+    | user_a  | varchar(7)   | NO   |     | NULL    |       |
+    +---------+--------------+------+-----+---------+-------+
+
+
+```
+
 ## idea
 
 - *you can take random trivia with multiple difficulties, the questions are supplied by open trivia api, your account and quiz scores are saved in a db*
