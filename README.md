@@ -33,6 +33,7 @@
     | password   | varchar(255) | NO   |     | NULL                |       |
     | created_at | timestamp    | NO   |     | current_timestamp() |       |
     | score      | int(11)      | NO   |     | 0                   |       |
+    | role       | varchar(15)  | NO   |     | user                |       |
     +------------+--------------+------+-----+---------------------+-------+
 
 
