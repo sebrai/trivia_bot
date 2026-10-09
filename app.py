@@ -5,6 +5,7 @@ import os
 import base64
 from dotenv import load_dotenv
 import requests
+import json
 
 load_dotenv()
 
@@ -137,27 +138,41 @@ def call_q(diff):
     # return redirect(url_for('home'))
     return data
 
-@app.route("/anwser/<diffi>", methods=["GET", "POST"])
-def anwser(diffi):
-    url = 'http://127.0.0.1:5000' + url_for("call_q",diff = diffi)
-    try:
-      
-        response = requests.get(url)
+@app.route("/answer/<diffi>", methods=["GET", "POST"])
+def answer(diffi):
+    if  not session.get('id'):
+        return redirect(url_for('login'))
+    if request.method == "POST":
+        if not session.get('current_q'):
+            flash("there is no question to answer","error")
+            return redirect(url_for('home'))
+        answer = request.form.get("answer")
         
-     
-        response.raise_for_status()
-      
-        data = response.json()
-        
+        current = json.loads(session.get("current_q"))
+        print("answer:",answer,"correct:",current['correct_answer'])
+        return redirect(url_for('home'))
+    else:
 
-    except requests.exceptions.HTTPError as http_err:
-        flash(f"unkown error: {http_err}","error")
-        return redirect(url_for('home'))
-    except Exception as err:
-        flash(f"unkown error: {err}","error")
-        return redirect(url_for('home'))
-    # print(type(data),data)
-    return render_template("question.html", q = data['results'][0])
+        url = 'http://127.0.0.1:5000' + url_for("call_q",diff = diffi)
+        try:
+        
+            response = requests.get(url)
+            
+        
+            response.raise_for_status()
+        
+            data = response.json()
+            
+
+        except requests.exceptions.HTTPError as http_err:
+            flash(f"unkown error: {http_err}","error")
+            return redirect(url_for('home'))
+        except Exception as err:
+            flash(f"unkown error: {err}","error")
+            return redirect(url_for('home'))
+        # print(type(data),data)
+        session['current_q'] = json.dumps(data['results'][0])
+        return render_template("question.html", q = data['results'][0], diff = diffi)
 
 if __name__ == "__main__":
 
