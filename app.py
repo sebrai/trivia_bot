@@ -98,6 +98,11 @@ def home():
 
 @app.route("/call_q/<diff>")
 def call_q(diff):
+    client_ip = request.remote_addr
+    if client_ip != "127.0.0.1":
+        flash("you dont have acces to that route") 
+        return redirect(url_for("home"))
+    # this may break in the future
     url = diffurls[diff]
     try:
       
