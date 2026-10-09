@@ -96,6 +96,38 @@ def home():
     conn.close()
     return render_template('home.html')
 
+@app.route("/call_q/<diff>")
+def call_q(diff):
+    url = diffurls[diff]
+    try:
+      
+        response = requests.get(url)
+        
+     
+        response.raise_for_status()
+      
+        data = response.json()
+        
+     
+        # print("Success! Data retrieved:")
+        # print(data)
+        # print(f"Title: {data.get('title')}")
+
+    except requests.exceptions.HTTPError as http_err:
+        print(f"HTTP error occurred: {http_err}")
+        return redirect(url_for('home'))
+    except Exception as err:
+        print(f"An error occurred: {err}")
+        return redirect(url_for('home'))
+    for key in data['results'][0]:
+        if key != "incorrect_answers":
+            data['results'][0][key] = base64.b64decode(data['results'][0][key]).decode("utf-8")
+        else:
+            data['results'][0][key][0] = base64.b64decode(data['results'][0][key][0]).decode("utf-8")
+    print(data)
+
+    # return redirect(url_for('home'))
+    return data
 
 if __name__ == "__main__":
 
