@@ -139,7 +139,7 @@ def call_q(diff):
 
 @app.route("/anwser/<diffi>")
 def anwser(diffi):
-    url = url_for("call_q",diff = diffi)
+    url = 'http://127.0.0.1:5000' + url_for("call_q",diff = diffi)
     try:
       
         response = requests.get(url)
@@ -157,7 +157,8 @@ def anwser(diffi):
         flash(f"unkown error: {err}","error")
         return redirect(url_for('home'))
     print(type(data),data)
-    return render_template("questions.html", q = data)
+    return render_template("question.html", q = data)
+
 if __name__ == "__main__":
 
     app.run(debug=True,host='0.0.0.0', port=5000)

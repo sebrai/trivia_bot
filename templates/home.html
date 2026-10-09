@@ -15,7 +15,9 @@
         <img src="https://ui-avatars.com/api/?&color=000&name={{ session.get('username') }}"
             alt="{{session['username']}} ">
     </header>
-
+    <main>
+        <a href="{{url_for('anwser',diffi = 'easy')}}">eay question</a>
+    </main>
     <footer>
         <a href="{{url_for('logout')}}"><button>logout</button></a>
         <div class="flashes">
