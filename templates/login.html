@@ -25,6 +25,16 @@
         <a href="{{url_for('register')}}" name="regi"><button>registrer</button></a>
     </main>
 
+      {% with messages = get_flashed_messages(with_categories=true) %}
+                {% if messages %}
+                    {% for category, message in messages %}
+                        <div class="alert alert-{{ category }}">
+                            {{ message }}  
+                        </div>
+                    {% endfor %}
+                {% endif %}
+            {% endwith %}
+
     {% if feil_melding %}
     <p style="color: red;">{{ feil_melding }}</p>
     {% endif %}

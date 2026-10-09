@@ -54,7 +54,7 @@ def login():
             session['username'] = bruker['username']
             session['id'] = bruker['id']
             session['role'] = bruker['role']
-
+            flash("succesfully loged in as: "+bruker['username'],"succes")
             return redirect(url_for("home"))
         else:
             return render_template("login.html", feil_melding="wrong username or password")
