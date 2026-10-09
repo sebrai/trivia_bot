@@ -40,7 +40,7 @@
 ```
 
 - *questions*
-  - *questions are inserted when user submits an awnser*
+  - *questions are inserted when user submits an answer*
 
 ``` sql
 
@@ -49,7 +49,7 @@
     +---------+--------------+------+-----+---------+-------+
     | id      | varchar(255) | NO   | PRI | uuid()  |       |
     | text    | varchar(255) | NO   |     | NULL    |       |
-    | awnser  | varchar(7)   | YES  |     | NULL    |       |
+    | answer  | varchar(7)   | YES  |     | NULL    |       |
     | user_id | varchar(255) | NO   | MUL | NULL    |       |
     | user_a  | varchar(7)   | NO   |     | NULL    |       |
     +---------+--------------+------+-----+---------+-------+
