@@ -137,6 +137,27 @@ def call_q(diff):
     # return redirect(url_for('home'))
     return data
 
+@app.route("/anwser/<diffi>")
+def anwser(diffi):
+    url = url_for("call_q",diff = diffi)
+    try:
+      
+        response = requests.get(url)
+        
+     
+        response.raise_for_status()
+      
+        data = response.json()
+        
+
+    except requests.exceptions.HTTPError as http_err:
+        flash(f"unkown error: {http_err}","error")
+        return redirect(url_for('home'))
+    except Exception as err:
+        flash(f"unkown error: {err}","error")
+        return redirect(url_for('home'))
+    print(type(data),data)
+    return render_template("questions.html", q = data)
 if __name__ == "__main__":
 
     app.run(debug=True,host='0.0.0.0', port=5000)
