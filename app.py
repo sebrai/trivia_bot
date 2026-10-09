@@ -132,12 +132,12 @@ def call_q(diff):
             data['results'][0][key] = base64.b64decode(data['results'][0][key]).decode("utf-8")
         else:
             data['results'][0][key][0] = base64.b64decode(data['results'][0][key][0]).decode("utf-8")
-    print(data)
+    # print(data)
 
     # return redirect(url_for('home'))
     return data
 
-@app.route("/anwser/<diffi>")
+@app.route("/anwser/<diffi>", methods=["GET", "POST"])
 def anwser(diffi):
     url = 'http://127.0.0.1:5000' + url_for("call_q",diff = diffi)
     try:
@@ -156,7 +156,7 @@ def anwser(diffi):
     except Exception as err:
         flash(f"unkown error: {err}","error")
         return redirect(url_for('home'))
-    print(type(data),data)
+    # print(type(data),data)
     return render_template("question.html", q = data)
 
 if __name__ == "__main__":
