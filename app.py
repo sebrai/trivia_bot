@@ -4,7 +4,7 @@ import mysql.connector
 import os
 import base64
 from dotenv import load_dotenv
-
+import requests
 
 load_dotenv()
 
@@ -12,6 +12,12 @@ user = os.getenv("user")
 pword = os.getenv("pword")
 app = Flask(__name__)
 app.secret_key = os.getenv("skey")
+
+diffurls = {
+    'easy': 'https://opentdb.com/api.php?amount=1&difficulty=easy&type=boolean&encode=base64',
+    'medium':"https://opentdb.com/api.php?amount=1&difficulty=medium&type=boolean&encode=base64",
+    "hard": "https://opentdb.com/api.php?amount=1&difficulty=hard&type=boolean&encode=base64"
+    }
 
 def get_db_connection():
     return mysql.connector.connect(
