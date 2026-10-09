@@ -157,7 +157,7 @@ def anwser(diffi):
         flash(f"unkown error: {err}","error")
         return redirect(url_for('home'))
     # print(type(data),data)
-    return render_template("question.html", q = data)
+    return render_template("question.html", q = data['results'][0])
 
 if __name__ == "__main__":
 
