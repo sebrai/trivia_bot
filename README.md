@@ -40,6 +40,7 @@
 ```
 
 - *questions*
+  - *questions are inserted when user submits an awnser*
 
 ``` sql
 
