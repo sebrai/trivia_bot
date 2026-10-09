@@ -120,9 +120,12 @@ def call_q(diff):
 
     except requests.exceptions.HTTPError as http_err:
         print(f"HTTP error occurred: {http_err}")
+        flash(f"failed to get question error: {http_err}", "api contact failed")
+        flash("try again later","advice")
         return redirect(url_for('home'))
     except Exception as err:
         print(f"An error occurred: {err}")
+        flash(f"failed to get question unforseen error: {err}" , "unforseen error")
         return redirect(url_for('home'))
     for key in data['results'][0]:
         if key != "incorrect_answers":
