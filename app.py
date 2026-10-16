@@ -162,6 +162,12 @@ def answer(diffi):
             points = score_dict[current['difficulty']]
             session['score'] = session['score'] + points
             flash("correct answer")
+            conn = get_db_connection()
+            cursor = conn.cursor()
+            cursor.execute("UPDATE users SET score = %s WHERE id = %s",(session['score'],session['id']))
+            conn.commit()
+            cursor.close()
+            conn. close()
         else:
             flash("wrong answer")
         return redirect(url_for('save_q',u_a = answer))
