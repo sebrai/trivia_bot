@@ -10,8 +10,8 @@
     <main>
         <h1>{{q['question'].replace("('","").replace(")'","").strip()}} ( {{q['difficulty'].replace("('","").replace(")'","").strip()}} )</h1>
         <form action="{{ url_for('answer', diffi = diff)}}" method="post">
-            <input type="submit" name="answer" value="true">
-            <input type="submit" name="answer" value="false">
+            <input type="submit" name="answer" value="True">
+            <input type="submit" name="answer" value="False">
         </form>
     </main>
 </body>

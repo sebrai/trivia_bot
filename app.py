@@ -91,7 +91,8 @@ def logout():
 def home():
     if  not session.get('id'):
       return redirect(url_for('login'))
-    
+    session.pop('current_q',None)
+
     conn = get_db_connection()
     cursor = conn.cursor(dictionary=True)
     cursor.close()
@@ -150,8 +151,20 @@ def answer(diffi):
         answer = request.form.get("answer")
         
         current = json.loads(session.get("current_q"))
-        print("answer:",answer,"correct:",current['correct_answer'])
-        return redirect(url_for('home'))
+        # print("answer:",answer,type(answer),"correct:",current['correct_answer'],type(current['correct_answer']))
+        score_dict = {
+            'easy':3,
+            'medium':5,
+            'hard':10
+        }
+        
+        if current['correct_answer'] == answer:
+            points = score_dict[current['difficulty']]
+            session['score'] = session['score'] + points
+            flash("correct answer")
+        else:
+            flash("wrong answer")
+        return redirect(url_for('save_q',u_a = answer))
     else:
 
         url = 'http://127.0.0.1:5000' + url_for("call_q",diff = diffi)
@@ -175,6 +188,21 @@ def answer(diffi):
         session['current_q'] = json.dumps(data['results'][0])
         return render_template("question.html", q = data['results'][0], diff = diffi)
 
+@app.route("/save_q/<u_a>")
+def save_q(u_a):
+    if  not session.get('id'):
+        return redirect(url_for('login'))
+    if not session.get('current_q'):
+        return redirect(url_for('home'))
+    q = json.loads(session['current_q'])
+    session.pop('current_q',None)
+    conn = get_db_connection()
+    cursor = conn.cursor(dictionary=True)
+    cursor.execute('INSERT INTO qs(text,awnser,user_id,user_a) VALUES(%s,%s,%s,%s)',(q['question'],q['correct_answer'],session['id'],u_a))
+    conn.commit()
+    cursor.close()
+    conn.close()
+    return redirect(url_for('home'))
 if __name__ == "__main__":
 
     app.run(debug=True,host='0.0.0.0', port=5000)
