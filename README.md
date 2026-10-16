@@ -49,7 +49,7 @@
     +---------+--------------+------+-----+---------+-------+
     | id      | varchar(255) | NO   | PRI | uuid()  |       |
     | text    | varchar(255) | NO   |     | NULL    |       |
-    | answer  | varchar(7)   | YES  |     | NULL    |       |
+    | awnser  | varchar(7)   | YES  |     | NULL    |       |
     | user_id | varchar(255) | NO   | MUL | NULL    |       |
     | user_a  | varchar(7)   | NO   |     | NULL    |       |
     +---------+--------------+------+-----+---------+-------+
