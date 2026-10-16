@@ -45,7 +45,7 @@ def login():
 
         conn = get_db_connection()
         cursor = conn.cursor(dictionary=True)
-        cursor.execute("SELECT id,username,password,role FROM users WHERE username=%s", (brukernavn,))
+        cursor.execute("SELECT id,username,password,role,score FROM users WHERE username=%s", (brukernavn,))
         bruker = cursor.fetchone()
         cursor.close()
         conn.close()
@@ -55,6 +55,7 @@ def login():
             session['username'] = bruker['username']
             session['id'] = bruker['id']
             session['role'] = bruker['role']
+            session['score'] = bruker['score']
             flash("succesfully loged in as: "+bruker['username'],"succes")
             return redirect(url_for("home"))
         else:
