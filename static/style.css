@@ -11,18 +11,23 @@ main{
     background-color: var(--second);
     border-radius: 25px;
     position: fixed;
-    top: 15vh;
+    top: 20vh;
     left:  5vw;
     width: 90vw;
-    height: 70vh;
+    height: 60vh;
     border: var(--accent) solid 5px;
     overflow-y: auto;
-
+    padding-left: 15px;
+    padding-top: 15px;
 }
 main >*{
     margin: 20px;
 }
-
+.info_b{
+    position: absolute;
+    top:0;
+    right: 0;
+}
 
 header{ display: flex;
 background-color: var(--second);

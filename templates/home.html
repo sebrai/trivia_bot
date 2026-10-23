@@ -22,6 +22,7 @@
         <a href="{{url_for('answer',diffi = 'easy')}}"><button>easy question</button></a>
         <a href="{{url_for('answer',diffi = 'medium')}}"><button>medium question</button></a>
         <a href="{{url_for('answer',diffi = 'hard')}}"><button>hard question</button></a>
+        <a href="{{url_for('info')}}" class="info_b"><button>(?)</button></a>
     </main>
     <footer>
         <a href="{{url_for('logout')}}"><button>logout</button></a>
@@ -36,7 +37,6 @@
                 {% endif %}
             {% endwith %}
         </div>
-        <a href="{{url_for('info')}}"><button>(?)</button></a>
     </footer>
 </body>
 
