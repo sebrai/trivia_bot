@@ -209,6 +209,11 @@ def save_q(u_a):
     cursor.close()
     conn.close()
     return redirect(url_for('home'))
+
+
+@app.route("/info")
+def info():
+    return render_template("info.html")
 if __name__ == "__main__":
 
     app.run(debug=True,host='0.0.0.0', port=5000)
