@@ -1,4 +1,4 @@
-from flask import Flask, render_template, request, redirect, url_for, session, flash, abort, Response
+from flask import Flask, render_template, request, redirect, url_for, session, flash
 from werkzeug.security import generate_password_hash, check_password_hash
 import mysql.connector
 import os
@@ -51,12 +51,12 @@ def login():
         conn.close()
         if not bruker:
             return render_template("login.html", feil_melding="wrong username or password")
-        if bruker and check_password_hash(bruker['password'], passord):
-            session['username'] = bruker['username']
-            session['id'] = bruker['id']
-            session['role'] = bruker['role']
-            session['score'] = bruker['score']
-            flash("succesfully loged in as: "+bruker['username'],"succes")
+        if bruker and check_password_hash(bruker['password'], passord): # type: ignore
+            session['username'] = bruker['username'] # type: ignore
+            session['id'] = bruker['id'] # type: ignore
+            session['role'] = bruker['role'] # type: ignore
+            session['score'] = bruker['score'] # type: ignore
+            flash("succesfully loged in as: " + bruker['username'],"succes") # type: ignore
             return redirect(url_for("home"))
         else:
             return render_template("login.html", feil_melding="wrong username or password")
@@ -100,7 +100,7 @@ def home():
     return render_template('home.html')
 
 @app.route("/call_q/<diff>")
-def call_q(diff):
+def call_q(diff:str):
     client_ip = request.remote_addr
     if client_ip != "127.0.0.1":
         flash("you dont have acces to that route") 
@@ -141,7 +141,7 @@ def call_q(diff):
     return data
 
 @app.route("/answer/<diffi>", methods=["GET", "POST"])
-def answer(diffi):
+def answer(diffi:str):
     if  not session.get('id'):
         return redirect(url_for('login'))
     if request.method == "POST":
@@ -150,7 +150,7 @@ def answer(diffi):
             return redirect(url_for('home'))
         answer = request.form.get("answer")
         
-        current = json.loads(session.get("current_q"))
+        current = json.loads(session.get("current_q")) # type: ignore
         # print("answer:",answer,type(answer),"correct:",current['correct_answer'],type(current['correct_answer']))
         score_dict = {
             'easy':3,
@@ -195,7 +195,7 @@ def answer(diffi):
         return render_template("question.html", q = data['results'][0], diff = diffi)
 
 @app.route("/save_q/<u_a>")
-def save_q(u_a):
+def save_q(u_a): # type: ignore
     if  not session.get('id'):
         return redirect(url_for('login'))
     if not session.get('current_q'):
@@ -204,7 +204,7 @@ def save_q(u_a):
     session.pop('current_q',None)
     conn = get_db_connection()
     cursor = conn.cursor(dictionary=True)
-    cursor.execute('INSERT INTO qs(text,awnser,user_id,user_a) VALUES(%s,%s,%s,%s)',(q['question'],q['correct_answer'],session['id'],u_a))
+    cursor.execute('INSERT INTO qs(text,awnser,user_id,user_a) VALUES(%s,%s,%s,%s)',(q['question'],q['correct_answer'],session['id'],u_a)) # type: ignore
     conn.commit()
     cursor.close()
     conn.close()
